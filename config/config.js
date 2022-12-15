@@ -1,6 +1,7 @@
-const Sequelize = require("sequelize")
-const dotenv = require("dotenv")
-const path = require("path")
+const Sequelize = require("sequelize");
+const dotenv = require("dotenv");
+const path = require("path");
+const colors = require("colors");
 
 dotenv.config({
     path : path.resolve(__dirname, `../${process.env.NODE_ENV.trim()}.env`)
@@ -16,6 +17,6 @@ const db = new Sequelize(
     }
 )
 
-console.log(`NODE_ENV = ${process.env.NODE_ENV}`);
+console.log(`NODE_ENV = ${process.env.NODE_ENV}`.yellow);
 
 module.exports = db;

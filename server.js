@@ -1,8 +1,10 @@
-const express = require("express")
-const cors = require("cors")
-const db = require("./config/config")
+const express = require("express");
+const cors = require("cors");
+const db = require("./config/config");
+const colors = require("colors");
+const { errorHandler } = require("./middleware/error-handler");
 
-const app = express()
+const app = express();
 
 const corsOptions = {
     origin: "http://localhost:7171"
@@ -27,11 +29,17 @@ const PORT = process.env.PORT || 7171;
 // database sync
 db.sync()
     .then(() => {
+        console.log("Generate Tables".green);
         app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}.`);
+            console.log(`Server is running on port ${PORT}.`.yellow);
         });
     })
     .catch((err) => {
         console.log("Error");
     });
 
+// routes
+app.use("/api/users", require("./routes/users-routes"));
+
+// global error handler
+app.use(errorHandler);
