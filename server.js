@@ -3,6 +3,8 @@ const cors = require("cors");
 const db = require("./config/config");
 const colors = require("colors");
 const { errorHandler } = require("./middleware/error-handler");
+const swaggerJSDocs = require("swagger-jsdoc");
+const swaggerUI = require("swagger-ui-express");
 
 const app = express();
 
@@ -43,3 +45,18 @@ app.use("/api/users", require("./routes/users-routes"));
 
 // global error handler
 app.use(errorHandler);
+
+// Swagger configuration
+const swaggerOptions = {
+    swaggerDefinition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Users API',
+            version: '1.0.0'
+        }
+    },
+    apis: ['./routes/*.js']
+}
+
+const swaggerDocs = swaggerJSDocs(swaggerOptions);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
