@@ -4,7 +4,7 @@ const Users = require("../model/Users");
 const findAllUsers = AsyncHandler(async (req, res) => {
     const usersList = await Users.findAll();
 
-    req.status(200).json({
+    res.status(200).json({
         description : "Successfully fetched user data!.",
         data: usersList
     });
@@ -39,7 +39,7 @@ const createUsers = AsyncHandler(async (req, res) => {
 
 const findUsersByID = AsyncHandler(async (req, res) => {
     const user = await Users.findByPk(req.params.id);
-    req.status(200).json({
+    res.status(200).json({
         description : `Successfully fetch by id: ${req.params.id} user data!.`,
         data: user
     });
@@ -49,7 +49,7 @@ const updateUsers = AsyncHandler(async (req, res) => {
     const user = await Users.update(req.body,{
         where: {id: req.params.id}
     });
-    req.status(200).json({
+    res.status(200).json({
         //description : `Successfully updated by id: ${req.params.id} user data!.`,
         description : `Successfully updated user data!.`,
         data: user
@@ -57,10 +57,10 @@ const updateUsers = AsyncHandler(async (req, res) => {
 });
 
 const removeUsers = AsyncHandler(async (req, res) => {
-    const user = await Users.destoy({
+    const user = await Users.destroy({
         where: {id: req.params.id}
     });
-    req.status(200).json({
+    res.status(200).json({
         //description : `Successfully updated by id: ${req.params.id} user data!.`,
         description : `Successfully deleted user data!.`,
         data: user
